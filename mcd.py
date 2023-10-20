@@ -7,7 +7,12 @@ import pickle
 from pathlib import Path
 import streamlit_authenticator as stauth
 
-st.set_page_config(layout="wide")
+# st.set_page_config(layout="wide")
+st.set_page_config(
+    page_title="BioCare",
+    page_icon="🏥",
+    layout="wide"
+)
 #.........................DESIGN BEGINS ............................
 #to add picture from local computer
 import base64
@@ -42,6 +47,10 @@ d1 = pd.read_csv('heart.csv')
 d2 = pd.read_csv('stroke_feature.csv')
 d3 = pd.read_csv('lung_feature.csv')
 
+a = pd.read_csv('heart_variables.csv')
+b = pd.read_csv('lung_variables.csv')
+c = pd.read_csv('stroke_variables.csv')
+
 heart_model = joblib.load("heart_model.pkl")
 lung_model = joblib.load("lung_model.pkl")
 stroke_model = joblib.load("stroke_model.pkl")
@@ -51,15 +60,31 @@ stroke_model = joblib.load("stroke_model.pkl")
 #side bar
 with st.sidebar:
     selected = option_menu('Multiple Disease Prediction System',
-                           ['Home','Heart Disease Prediction',
+                           ['Home','About Us','Features','Heart Disease Prediction',
                             'Lung Disease Prediction',
                             'Stroke Disease Prediction',
                             'Contact Us'],
-                           icons = ['house','heart-pulse-fill','lungs','activity', 'envelope'],
+                           icons = ['house','person-circle','lightbulb','heart-pulse-fill','lungs','activity', 'envelope'],
                            default_index = 0,
     )
 
 
+
+if (selected == 'Features'):
+    hv = pd.DataFrame(a)
+    st.header("Heart Variables")
+    st.table(hv)
+    
+    st.markdown("<br>", unsafe_allow_html=True)
+    st.header("Lungs Variable")
+    lv = pd.DataFrame(b)
+    st.table(lv)
+    
+    st.markdown("<br>", unsafe_allow_html=True)
+    st.header("Stroke Variable")
+    sv = pd.DataFrame(c)
+    st.table(sv)
+    
                             
 #login/signup page
 
@@ -249,13 +274,12 @@ if(selected == 'Home'):
     st.markdown("<h2>Project Background</h2>", unsafe_allow_html=True)
     # Introduction section
     st.markdown('<p style = "color:black;">Chronic diseases represent a growing global health challenge that demands innovative solutions. These long-term health conditions, such as heart disease, diabetes, cancer, and respiratory disorders, have become leading causes of morbidity and mortality worldwide. The burden of chronic diseases not only affects individuals and their families but also places significant strain on healthcare systems and economies</p>', unsafe_allow_html=True)
+    with st.expander('Read more'):
+        st.markdown('<p style = "color:black";>Traditionally, healthcare has been reactive, with interventions occurring after the onset of symptoms or disease complications. However, there is a paradigm shift towards proactive and preventive healthcare. Advances in data collection, technology, and machine learning present an unprecedented opportunity to predict chronic diseases before they manifest clinically. Early detection allows for timely interventions, personalized treatment plans, and improved health outcomes</p>', unsafe_allow_html=True)
     
-    st.markdown("<h2>About Us</h2>", unsafe_allow_html=True)
-    st.markdown("<p style = 'color:black;'>We are dedicated to providing valuable insights into chronic disease prediction.</p>", unsafe_allow_html=True)
-    st.markdown("<p style = 'color:black;'>Welcome to our Chronic Disease Prediction project. We are passionate about improving healthcare "
-          "through data-driven insights and early disease detection. Our mission is to empower individuals "
-          "to take control of their health by providing accurate and accessible disease prediction tools.</p>", unsafe_allow_html=True)
-
+    st.markdown("<h2>Problem Statement</h2>", unsafe_allow_html=True)
+    st.markdown("<p style = 'color : black;'>The problem you aim to solve is predicting the likelihood of a patient developing a chronic disease based on their health data. Chronic diseases are long-lasting conditions that may require ongoing medical attention and can significantly impact a person's quality of life. Early prediction of chronic diseases can lead to better preventive and therapeutic strategies, improving overall healthcare outcomes.</p>", unsafe_allow_html=True)
+    
     st.write("Key features of our project:")
     st.markdown(":red[1. **Accurate Predictions: We use advanced machine learning models to provide accurate predictions**.]", unsafe_allow_html=True)
     st.markdown(":red[2. **Early Detection: Detect chronic diseases at an early stage, increasing treatment success rates.**]")
@@ -360,7 +384,45 @@ if (selected == 'Heart Disease Prediction'):
                         else:
                             st.error('You have signs of heart disease, Please Seek Medical Help Immediately')
 
+
+#About Page
+if (selected == 'About Us'):
     
+    # Add a background image 
+    add_bg_from_local('aboutus.png')
+    # Title and header
+    st.markdown("<h1 style = 'color: black;'>About Biocare</h1>", unsafe_allow_html=True)
+    st.markdown("<h3 style = 'color: black;'>Predicting Diseases with Machine Learning</h3>", unsafe_allow_html=True)
+
+    # Mission
+    st.markdown("<h2 style = 'color: black;'>Our Mission</h2>", unsafe_allow_html=True)
+    st.markdown("<p = 'color: black;'>At Biocare, we are dedicated to making a difference in healthcare through the power of machine learning and data-driven insights. Our mission is to improve the lives of individuals by providing early disease prediction, proactive healthcare solutions, and personalized recommendations.</p>", unsafe_allow_html=True)
+
+    # Who We Are
+    st.markdown("<h2 style = 'color: black;'>Who We Are</h2>", unsafe_allow_html=True)
+    st.markdown("<p = 'color: black;'>Biocare is a team of passionate data scientists, machine learning engineers, and healthcare experts committed to harnessing the potential of cutting-edge technology to revolutionize the healthcare industry. We believe that proactive healthcare is the key to preventing and managing diseases.</p>", unsafe_allow_html=True)
+
+    # How We Work
+    st.markdown("<h2 style = 'color: black;'>How We Work</h2>", unsafe_allow_html=True)
+    st.markdown("<p = 'color: black;'> - **Data-Driven Insights:** We leverage state-of-the-art machine learning algorithms and deep learning models to analyze vast datasets and extract valuable insights.</p>", unsafe_allow_html=True)
+    st.markdown("<p = 'color: black;'> - **Early Disease Detection:** Our platform is designed to predict diseases at an early stage, enabling timely intervention and improving the chances of successful treatment.</p>", unsafe_allow_html=True)
+    st.markdown("<p = 'color: black;'> - **Personalized Healthcare:** We understand that every individual is unique. Biocare offers personalized recommendations and health plans tailored to your specific needs and risk factors.</p>", unsafe_allow_html=True)
+    st.markdown("<p = 'color: black;'> - **Easy Accessibility:** Our user-friendly interface ensures that anyone, regardless of their technical background, can access our platform and benefit from its capabilities.</p>", unsafe_allow_html=True)
+
+    # Vision
+    st.markdown("<h2 style = 'color: black;'>Our Vision</h2>", unsafe_allow_html=True)
+    st.write("We envision a future where healthcare is not just about treating diseases but preventing them. We see a world where individuals have the tools and knowledge to take control of their health, live longer, and enjoy a higher quality of life.")
+
+    # Contact Information
+    st.markdown("<h2 style = 'color: black;'>Get in Touch</h2>", unsafe_allow_html=True)
+    st.write("Have questions or feedback? We'd love to hear from you! Contact our team at [contact@biocare.com](mailto:elohougeh@gmail.com).")
+    st.write("Join us on our journey to a healthier, disease-free world. Together, we can make a positive impact on healthcare, one prediction at a time.")
+
+    
+    
+
+
+
 #Lung Prediction Page
 if (selected == 'Lung Disease Prediction'):
     
