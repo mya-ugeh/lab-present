@@ -200,54 +200,6 @@ with st.sidebar:
 
 #Home Page
 if(selected == 'Home'):
-    #connect base
-    from deta import Deta
-    import datetime
-    import re
-    DETA_KEY = 'a0hmzjsaglk_Nv2e9at6DnRkgcpPSQa7RTthC1aLjGtc'
-    deta = Deta(DETA_KEY)
-    db = deta.Base('disease_prediction')
-
-    # Define a function to validate the user's credentials
-    def validate_credentials(username, password):
-        user = db.get(username)
-        if user and user.get('password') == password:
-            return True
-        return False
-
-    # Create a SessionState object
-    class SessionState:
-        def __init__(self):
-            self.username = ""
-            self.logged_in = False
-
-    st.title("Sign In")
-
-    # Create the sign-in form
-    with st.form("Sign In Form"):
-        chose = st.selectbox("Select an option to log in or sign up", ["Login","Signup"])
-        if chose == "Login":
-            username = st.text_input("Username")
-            password = st.text_input("Password", type="password")
-
-            submitted = st.form_submit_button("Sign In")
-
-    # Create a SessionState object to manage session data
-    session_state = SessionState()
-
-    # Check if the user has logged in
-    if submitted and validate_credentials(username, password):
-        session_state.username = username
-        session_state.logged_in = True
-
-    if session_state.logged_in:
-        st.title("Welcome, " + session_state.username)
-        # You can now display other pages or sections of your application here
-    else:
-        st.error("Invalid username or password")
-
-# Add other sections or pages of your application below
-
     add_bg_from_local('1jiaxutc.png')
 
     # Define CSS styles for the homepage
@@ -299,16 +251,15 @@ if(selected == 'Home'):
     st.markdown('<p style = "color:black;">Chronic diseases represent a growing global health challenge that demands innovative solutions. These long-term health conditions, such as heart disease, diabetes, cancer, and respiratory disorders, have become leading causes of morbidity and mortality worldwide. The burden of chronic diseases not only affects individuals and their families but also places significant strain on healthcare systems and economies</p>', unsafe_allow_html=True)
     
     st.markdown("<h2>About Us</h2>", unsafe_allow_html=True)
-    st.write("We are dedicated to providing valuable insights into chronic disease prediction.")
-    st.write("Welcome to our Chronic Disease Prediction project. We are passionate about improving healthcare "
+    st.markdown("<p style = 'color:black;'>We are dedicated to providing valuable insights into chronic disease prediction.</p>", unsafe_allow_html=True)
+    st.markdown("<p style = 'color:black;'>Welcome to our Chronic Disease Prediction project. We are passionate about improving healthcare "
           "through data-driven insights and early disease detection. Our mission is to empower individuals "
-          "to take control of their health by providing accurate and accessible disease prediction tools.")
+          "to take control of their health by providing accurate and accessible disease prediction tools.</p>", unsafe_allow_html=True)
 
     st.write("Key features of our project:")
     st.markdown(":red[1. **Accurate Predictions: We use advanced machine learning models to provide accurate predictions**.]", unsafe_allow_html=True)
     st.markdown(":red[2. **Early Detection: Detect chronic diseases at an early stage, increasing treatment success rates.**]")
     st.markdown(":red[3. **User-Friendly: Our user-friendly interface makes it easy for you to predict your risk.**]")
-    st.markdown(":red[4. **Educational Content: We offer valuable information and resources related to each chronic disease.**]")
 
     st.write("Join us in the journey towards better health. Let's work together to prevent and manage chronic diseases.")
     st.markdown('<button class="btn">Let\'s begin your journey to better health!</button>', unsafe_allow_html=True)
